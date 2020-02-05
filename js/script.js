@@ -5,6 +5,10 @@ let novaTarefa;
 let divTarefas = document.getElementById("tarefas");
 
 btnAddTarefa.onclick = () => {
+    if (inputTarefa.value == ""){
+        alert("INSIRA ALGUM DADO");
+        return;
+    }
     novaTarefa = `<div class="col-md-4">
                     <div class="card-tarefa">
                         <div class="text-tarefa">
