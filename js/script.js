@@ -1,41 +1,44 @@
 let btnAddTarefa = document.getElementById("adicionar-tarefa");
 let inputTarefa = document.getElementById("tarefa-digitada");
 let divTarefas = document.getElementById("tarefas");
-let qtdTarefas = 0;
 
 btnAddTarefa.onclick = () => {
     adicionarTarefa();
 }
 
-inputTarefa.onkeypress = (e) =>{
+inputTarefa.onkeypress = (e) => {
     if (e.which == 13) {
         adicionarTarefa();
     }
 }
 
-removerTarefa = (tarefa) => {
-    let id = tarefa.getAttribute("value");
-    let div = document.getElementById(id);
-    div.remove();
+const removerTarefa = (tarefa) => {
+    tarefa.remove();
 }
 
-adicionarTarefa = () => {
-    if (inputTarefa.value == ""){
+const adicionarTarefa = () => {
+    if (inputTarefa.value == "") {
         alert("INSIRA ALGUM DADO");
         return;
     }
-    
-    let novaTarefa = `<div class="col-md-4 divTarefas" id="tarefa${qtdTarefas}">
-                    <div class="card-tarefa">
-                        <div class="text-tarefa">
-                            ${inputTarefa.value}
-                        </div>
-                        <div class="botao-tarefa" value="tarefa${qtdTarefas}" onClick="removerTarefa(this);">
-                            <img src="images/check.png" alt="Botão para finalizar tarefa" title="Botão para finalizar tarefa" width="32">
-                        </div>
-                    </div>
-                </div>`
-    divTarefas.innerHTML += novaTarefa;
+
+    let novaTarefa = retornarHTML(inputTarefa.value);
+    divTarefas.insertAdjacentHTML('beforeend', novaTarefa);
+    let objTarefaNova = divTarefas.lastElementChild;
+    objTarefaNova.lastElementChild.lastElementChild.onclick = () => removerTarefa(objTarefaNova);
     inputTarefa.value = "";
     qtdTarefas++;
+}
+
+retornarHTML = (valor) => {
+    return `<div class="col-md-4 divTarefas">
+                <div class="card-tarefa">
+                    <div class="text-tarefa">
+                        ${valor}
+                    </div>
+                    <div class="botao-tarefa">
+                        <img src="images/check.png" alt="Botão para finalizar tarefa" title="Botão para finalizar tarefa" width="32">
+                    </div>
+                </div>
+            </div>`
 }
